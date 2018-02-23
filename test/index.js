@@ -15,6 +15,7 @@ context = new OfflineAudioContext(2, length, samplerate);
     source = context.createBufferSource();
     processor = context.createScriptProcessor(fftSamples,1, 1);
 
+
 fetch('/src/assets/run.mp3')
 .then(res=>{
     return res.arrayBuffer();
@@ -52,5 +53,11 @@ function processBuffer(buffer) {
 var counter = 0;
 
 processAudio = function (e) {
-  console.log(e.outputBuffer.getChannelData(0));
+
+    let data = new Uint8Array(fftSamples);
+
+    fft.getByteTimeDomainData(data);
+
+    console.log(data);
+
 };
